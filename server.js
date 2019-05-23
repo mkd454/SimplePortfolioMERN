@@ -2,6 +2,10 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const mongoose = require("mongoose");
+
+// Requiring the `User` model for accessing the `users` collection
+const db = require("./models");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -11,7 +15,22 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Define API routes here
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/profiles", { useNewUrlParser: true });
+
+// let dummy = {
+//   name: "John Doe",
+//   picture: "https://images.pexels.com/photos/1194036/pexels-photo-1194036.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+//   description: "Please insert a description of yourself here."
+// }
+// // Define API routes here
+// db.User.create(dummy)
+//   .then(function(dbUser) {
+//     console.log(dbUser);
+//   })
+//   .catch(function(err) {
+//     res.json(err);
+//   })
 
 // Send every other request to the React app
 // Define any API routes before this runs

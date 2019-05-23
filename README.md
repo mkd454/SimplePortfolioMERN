@@ -2,7 +2,7 @@
 
 ## Coding Project Requirements
 
-- [ ] As a user I should be able to view a dashboard with your name, a profile picture and a description of yourself.
+- [x] As a user I should be able to view a dashboard with your name, a profile picture and a description of yourself.
 
 - [ ] As a user I should be able to update the following:
     - [ ] Name
