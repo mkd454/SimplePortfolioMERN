@@ -17,14 +17,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getAllProfiles();
+    this.getAllProfiles()
   }
 
   getAllProfiles = () => {
     API.getProfiles()
-      .then(res => {this.setState({
-        profiles: res.data,
-        needUpdate: false
+      .then(res => {
+        this.setState({
+          profiles: res.data,
+          user: this.state.profiles[0],
+          needUpdate: true
         })
       })
       .catch(err => console.log(err));
@@ -92,16 +94,16 @@ class App extends Component {
   renderContent = () => {
     if (this.state.showPage === 'menu') {
       return (
-        <div>
+        <div className="p-3 menudiv">
           <h1>What would you like to do?</h1>
-          <button type="button" className="btn btn-primary btn-lg" onClick={() => this.showForm('example')}>See Example Profile</button>
-          <button type="button" className="btn btn-primary btn-lg" onClick={() => this.showForm('create')}>Create a Profile</button>
-          <button type="button" className="btn btn-primary btn-lg" onClick={() => this.showForm('showAll')}>Show all Profiles</button>
+          <button type="button" className="menubtn btn btn-primary btn-lg" onClick={() => this.showForm('example')}>See Example Profile</button>
+          <button type="button" className="menubtn btn btn-primary btn-lg" onClick={() => this.showForm('create')}>Create a Profile</button>
+          <button type="button" className="menubtn btn btn-primary btn-lg" onClick={() => this.showForm('showAll')}>Show all Profiles</button>
         </div>
       );
     } else if (this.state.showPage === 'example') {
       return (
-        <div>
+        <div className="profilediv">
           <ProfilePage
             id={this.state.profiles[0]._id}
             name={this.state.profiles[0].name}
@@ -122,7 +124,7 @@ class App extends Component {
       );
     } else if (this.state.showPage === 'update') {
       return (
-        <div className="p-3">
+        <div className="p-3 profilediv">
           <form>
             <div className="form-group">
               <label for="exampleFormControlInput1">Name</label>
@@ -174,7 +176,7 @@ class App extends Component {
       )
     } else if (this.state.showPage === 'create') {
       return (
-        <div className="p-3">
+        <div className="p-3 profilediv">
           <form>
             <div className="form-group">
               <label for="exampleFormControlInput1">Name</label>
@@ -226,7 +228,7 @@ class App extends Component {
       )
     } else if (this.state.showPage === 'display') {
       return (
-        <div>
+        <div className="profilediv">
           <ProfilePage
             name={this.state.user.name}
             picture={this.state.user.picture}
@@ -246,7 +248,7 @@ class App extends Component {
       );
     } else if (this.state.showPage === 'showAll') {
       return (
-        <div>
+        <div className="profilediv">
           <div>
             {this.state.profiles.map(profile => (
               <ProfileCard

@@ -1,0 +1,24 @@
+ body {
+   background-image: url("https://images.unsplash.com/22/brick-wall.JPG?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+   padding: 3rem;
+  } 
+
+ .menubtn {
+   margin: 10px;
+ }
+
+ .menudiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    opacity: .80;
+    border-radius: 10px;
+    margin-top: 100px;
+ }
+
+ .profilediv {
+    background-color: white;
+    opacity: .90;
+    border-radius: 10px;
+ }
