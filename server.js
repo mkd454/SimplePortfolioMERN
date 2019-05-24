@@ -35,6 +35,19 @@ app.get("/api/users", function(req,res) {
     })
 })
 
+app.put("/api/users/:id", function(req,res) {
+  db.User.findOneAndUpdate(
+    { _id: req.body.id },
+    { $set: req.body.data }
+  )
+    .then(function(dbUser) {
+      res.json(dbUser)
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
+})
+
 // db.User.create(dummy)
 //   .then(function(dbUser) {
 //     console.log(dbUser);
