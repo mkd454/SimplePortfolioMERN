@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import API from "./utils/API";
 
 import ProfilePage from "./components/profilepage/profilepage";
 
@@ -8,17 +9,20 @@ class App extends Component {
     profiles: [],
     showPage: 'menu',
     needUpdate: false,
-    user: 'example'
   }
 
   componentDidMount() {
-    this.changePage();
+    this.getAllProfiles();
   }
 
-  changePage = page => {
-    this.setState({
-      page: page
-    });
+  getAllProfiles = () => {
+    API.getProfiles()
+      .then(res => {this.setState({
+        profiles: res.data,
+        needUpdate: false
+        })
+      })
+      .catch(err => console.log(err));
   }
 
   showForm = (formState) => {
@@ -28,8 +32,12 @@ class App extends Component {
     });
   }
 
+  findUser = userId => {
+    console.log("Pulling User Profile: " + userId);
+  }
+
   renderContent = () => {
-    if (this.state.profiles.length === 0 && this.state.showPage === 'menu') {
+    if (this.state.showPage === 'menu') {
       return (
         <div>
           <h1>What would you like to do?</h1>
@@ -41,14 +49,19 @@ class App extends Component {
     } else if (this.state.showPage === 'example') {
       return (
         <div>
-          <ProfilePage />
+          <ProfilePage 
+            name={this.state.profiles[0].name}
+            picture={this.state.profiles[0].picture}
+            description={this.state.profiles[0].description}
+          />
           <div className="row p-3">
             <div className="col-6">
               <button type="button" className="btn btn-block btn-large btn-outline-danger"
               onClick={() => this.showForm('menu')}>Back  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
             </div>
             <div className="col-6">
-              <button type="button" className="btn btn-block btn-large btn-success">Update Profile  <span className="fa fa-calendar-check-o fa-md" aria-hidden="true"></span> </button>
+              <button type="button" className="btn btn-block btn-large btn-success"
+              onClick={() => this.showForm('update')}>Update Profile  <span className="fa fa-calendar-check-o fa-md" aria-hidden="true"></span> </button>
             </div>
           </div>
         </div>

@@ -23,7 +23,18 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/profiles", { us
 //   picture: "https://images.pexels.com/photos/1194036/pexels-photo-1194036.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
 //   description: "Please insert a description of yourself here."
 // }
-// // Define API routes here
+
+// Define API routes here
+app.get("/api/users", function(req,res) {
+  db.User.find()
+    .then(function(dbUser) {
+      res.json(dbUser)
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
+})
+
 // db.User.create(dummy)
 //   .then(function(dbUser) {
 //     console.log(dbUser);
