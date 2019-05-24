@@ -48,13 +48,16 @@ app.put("/api/users/:id", function(req,res) {
     })
 })
 
-// db.User.create(dummy)
-//   .then(function(dbUser) {
-//     console.log(dbUser);
-//   })
-//   .catch(function(err) {
-//     res.json(err);
-//   })
+app.post("/api/users", function(req,res) {
+  console.log(req.body.newProf);
+  db.User.create(req.body.newProf)
+    .then(function(dbUser) {
+      res.json(dbUser);
+    })
+    .catch(function(err) {
+      res.json(err);
+    })
+})
 
 // Send every other request to the React app
 // Define any API routes before this runs

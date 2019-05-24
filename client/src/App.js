@@ -11,7 +11,8 @@ class App extends Component {
     needUpdate: false,
     name: "",
     picture: "",
-    description: ""
+    description: "",
+    user: {}
   }
 
   componentDidMount() {
@@ -71,9 +72,21 @@ class App extends Component {
     }
   }
 
-  // findUser = userId => {
-  //   console.log("Pulling User Profile: " + userId);
-  // }
+  createProfile = () => {
+    let newProf = {
+      name: this.state.name,
+      picture: this.state.picture,
+      description: this.state.description
+    }
+    API.createProfile(newProf)
+    .then(res => {this.setState({
+        needUpdate: true,
+        user: res.data,
+        showPage: 'display'
+      })
+    })
+    .catch(err => console.log(err));
+  }
 
   renderContent = () => {
     if (this.state.showPage === 'menu') {
@@ -149,7 +162,7 @@ class App extends Component {
           <div className="row p-3">
             <div className="col-6">
               <button type="button" className="btn btn-block btn-large btn-outline-danger"
-              onClick={() => this.showForm('example')}>Cancel  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
+              onClick={() => this.showForm('example')}>Back  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
             </div>
             <div className="col-6">
               <button type="button" className="btn btn-block btn-large btn-success"
@@ -159,7 +172,77 @@ class App extends Component {
         </div>
       )
     } else if (this.state.showPage === 'create') {
-      
+      return (
+        <div className="p-3">
+          <form>
+            <div className="form-group">
+              <label for="exampleFormControlInput1">Name</label>
+              <input 
+                onChange={this.handleInputChange}
+                value={this.state.name}
+                name="name"
+                type="text" 
+                className="form-control" 
+                id="exampleFormControlInput1" 
+                placeholder="Ex. John Doe" 
+              />
+            </div>
+            <div className="form-group">
+              <label for="exampleFormControlInput2">Picture</label>
+              <input 
+                onChange={this.handleInputChange}
+                value={this.state.picture}
+                name="picture"
+                type="text" 
+                className="form-control" 
+                id="exampleFormControlInput2" 
+                placeholder="Ex. https://via.placeholder.com/150C/O https://placeholder.com/" 
+              />
+            </div>
+            <div className="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea 
+                onChange={this.handleInputChange}
+                value={this.state.description}
+                name="description"
+                className="form-control" 
+                id="exampleFormControlTextarea1" 
+                rows="3"
+              ></textarea>
+            </div>
+          </form>
+          <div className="row p-3">
+            <div className="col-6">
+              <button type="button" className="btn btn-block btn-large btn-outline-danger"
+              onClick={() => this.showForm('menu')}>Back  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
+            </div>
+            <div className="col-6">
+              <button type="button" className="btn btn-block btn-large btn-success"
+              onClick={() => this.createProfile()}>Create  <span className="fa fa-calendar-check-o fa-md" aria-hidden="true"></span> </button>
+            </div>
+          </div>
+        </div>
+      )
+    } else if (this.state.showPage === 'display') {
+      return (
+        <div>
+          <ProfilePage
+            name={this.state.user.name}
+            picture={this.state.user.picture}
+            description={this.state.user.description}
+          />
+          <div className="row p-3">
+            <div className="col-6">
+              <button type="button" className="btn btn-block btn-large btn-outline-danger"
+              onClick={() => this.showForm('menu')}>Back  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
+            </div>
+            <div className="col-6">
+              <button type="button" className="btn btn-block btn-large btn-success"
+              onClick={() => this.showForm('update')}>Update Profile  <span className="fa fa-calendar-check-o fa-md" aria-hidden="true"></span> </button>
+            </div>
+          </div>
+        </div>
+      );
     }
   }
 

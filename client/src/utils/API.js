@@ -10,5 +10,10 @@ export default {
     console.log("userid: "+id);
     console.log(data);
     return axios.put("/api/users/" + id, {id, data});
+  },
+  createProfile: function(newProf) {
+    console.log("Creating a new profile");
+    console.log(newProf);
+    return axios.post("/api/users", {newProf});
   }
 }
