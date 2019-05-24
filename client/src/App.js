@@ -3,6 +3,7 @@ import "./App.css";
 import API from "./utils/API";
 
 import ProfilePage from "./components/profilepage/profilepage";
+import ProfileCard from "./components/profilecards/profileCard";
 
 class App extends Component {
   state = {
@@ -243,6 +244,28 @@ class App extends Component {
           </div>
         </div>
       );
+    } else if (this.state.showPage === 'showAll') {
+      return (
+        <div>
+          <div>
+            {this.state.profiles.map(profile => (
+              <ProfileCard
+                key={"create-" + profile._id}
+                id={profile._id}
+                name={profile.name}
+                picture={profile.picture}
+                description={profile.description}
+              />
+            ))}
+          </div>
+          <div className="row p-3">
+            <div className="col-6">
+              <button type="button" className="btn btn-block btn-large btn-outline-danger"
+              onClick={() => this.showForm('menu')}>Back  <span className="fa fa-sign-out fa-lg" aria-hidden="true"></span> </button>
+            </div>
+          </div>
+        </div>
+      )
     }
   }
 
